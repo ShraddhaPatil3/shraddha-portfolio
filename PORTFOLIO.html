@@ -1660,7 +1660,8 @@
 
             // initialize immediately if DOM is ready, otherwise wait for DOMContentLoaded
             function initTheme(){
-                const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                // Default to light mode unless the user explicitly saved a preference
+                const saved = localStorage.getItem('theme') || 'light';
                 setTheme(saved);
                 // attach click handler once
                 toggle.addEventListener('click', ()=>{
