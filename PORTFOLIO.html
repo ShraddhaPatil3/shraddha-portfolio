@@ -88,8 +88,20 @@
 
         .nav-links {
             display: flex;
-            gap: 35px;
+            gap: 30px;
             margin-left: auto; /* keep links to the right so logo has room */
+            align-items: center;
+        }
+
+        /* (Resume link uses the same style as nav links now) */
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 6px 0;
         }
 
         .nav-links a {
@@ -127,6 +139,32 @@
             cursor: pointer;
             color: var(--dark);
         }
+
+        /* Theme toggle circular button */
+        #theme-toggle {
+            width: 42px;
+            height: 42px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.05);
+            color: var(--dark);
+            border: 1px solid rgba(0,0,0,0.04);
+            margin-left: 12px;
+        }
+
+        #theme-toggle i { font-size: 0.95rem; }
+
+        /* Dark header look (matches screenshot) */
+        body.dark header {
+            background-color: rgba(15, 23, 36, 0.6);
+            box-shadow: none;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        body.dark #theme-toggle { background: rgba(255,255,255,0.03); color: var(--dark); border-color: rgba(255,255,255,0.04); }
+
+        body.dark .nav-links a { color: var(--dark); }
 
         /* Hero Section */
         .hero {
@@ -1036,6 +1074,107 @@
         @media (max-width: 420px) {
             .logo { font-size: 1.3rem; } /* small fallback so full name fits on tiny screens */
         }
+
+        /* Dark theme overrides: toggle by adding `dark` class to <body> */
+        body.dark {
+            --light: #0f1724; /* dark background */
+            --dark: #e6eef8;  /* light text */
+            --gray: #9aa4b2;
+            --primary: #8b84ff;
+            --primary-dark: #6e68d9;
+            --secondary: #ff8aa2;
+            --gradient: linear-gradient(135deg, #6e68d9, #ff8aa2);
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Card and panel adjustments for dark mode to keep good contrast */
+        body.dark .skill-item,
+        body.dark .education-card,
+        body.dark .project-card,
+        body.dark .education-card .education-item,
+        body.dark .skill-category,
+        body.dark .contact-form,
+        body.dark .contact-info {
+            background: rgba(255,255,255,0.02);
+            box-shadow: none;
+            color: var(--dark);
+        }
+
+        body.dark .skill-item i { color: var(--primary); }
+
+        /* Project card needs a slightly stronger surface so text and controls pop */
+        body.dark .project-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        }
+
+        body.dark .education-item { border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+        /* Make inputs and form controls darker background in dark mode */
+        body.dark .form-control {
+            background: rgba(255,255,255,0.02);
+            color: var(--dark);
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* Make footer and other small cards match the theme */
+        body.dark footer, body.dark .footer-content {
+            background: transparent;
+            color: var(--gray);
+        }
+
+        /* Certifications & Experience (timeline) dark adjustments */
+        body.dark .certification-item {
+            background: rgba(255,255,255,0.02);
+            box-shadow: none;
+            color: var(--dark);
+        }
+        body.dark .certification-details h4 { color: var(--dark); }
+        body.dark .certification-details p { color: var(--gray); }
+        body.dark .certification-icon { background: linear-gradient(135deg, rgba(110,104,217,0.18), rgba(255,138,162,0.12)); color: white; }
+
+        /* Timeline / experience cards */
+        body.dark .timeline-content {
+            background: rgba(255,255,255,0.02);
+            box-shadow: none;
+            color: var(--dark);
+        }
+        body.dark .timeline-content::before {
+            background: rgba(255,255,255,0.02);
+        }
+        body.dark .timeline-item::after {
+            background: var(--light);
+            border-color: var(--primary);
+        }
+        body.dark .timeline::after {
+            background: linear-gradient(to bottom, var(--primary), rgba(255,255,255,0.06));
+        }
+
+        /* Slightly stronger hover for dark mode */
+        body.dark .timeline-content:hover,
+        body.dark .certification-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Theme toggle button in header */
+        #theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--dark);
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: var(--transition);
+            margin-left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #theme-toggle:hover { transform: translateY(-2px); color: var(--primary); }
+
     </style>
 </head>
 <body>
@@ -1050,7 +1189,10 @@
                     <a href="#experience">Experience</a>
                     <a href="#projects">Projects</a>
                     <a href="#contact">Contact</a>
+                    <a href="Shraddha_Patil_CV.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Resume</a>
                 </div>
+                <!-- Theme toggle (moon / sun) -->
+                <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
                 <div class="mobile-menu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1062,7 +1204,9 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-
+              <div class="hero-badge">
+                    <i class="fas fa-rocket"></i> Software Developer 
+                </div>
                 <h1>Transforming Ideas Into <span class="gradient-text">Digital Experiences</span></h1>
                 <p>I create beautiful, functional, and user-centered digital experiences. With a good foundation in both design and development, I bridge the gap between aesthetics and functionality.</p>
                 <div class="hero-buttons">
@@ -1490,8 +1634,47 @@
             });
           }, { threshold: 0.2 });
           fills.forEach(f => fillObserver.observe(f));
-        }
-      });
-    </script>
+                }
+            });
+        </script>
+
+        <script>
+        // Theme toggle: toggles body.dark and persists choice in localStorage
+        (function(){
+            const toggle = document.getElementById('theme-toggle');
+            if(!toggle) return;
+            const icon = toggle.querySelector('i');
+
+            function setTheme(theme){
+                if(theme === 'dark'){
+                    document.body.classList.add('dark');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    document.body.classList.remove('dark');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+                try{ localStorage.setItem('theme', theme); } catch(e){}
+            }
+
+            // initialize immediately if DOM is ready, otherwise wait for DOMContentLoaded
+            function initTheme(){
+                const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                setTheme(saved);
+                // attach click handler once
+                toggle.addEventListener('click', ()=>{
+                    const isDark = document.body.classList.contains('dark');
+                    setTheme(isDark ? 'light' : 'dark');
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTheme);
+            } else {
+                initTheme();
+            }
+        })();
+        </script>
 </body>
 </html>
